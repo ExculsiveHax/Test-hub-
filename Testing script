@@ -1,75 +1,32 @@
-local QuickEdit = require(game:GetService("ServerScriptService"):WaitForChild("QuickEdit")) -- Require QuickEdit module
+-- Script Hub
+-- Created by WaveAI
 
--- Create a function to open a script
-local function openScript(scriptName)
-    local script = game.ServerScriptService:FindFirstChild(scriptName)
+-- Define functions to load and execute scripts
+
+local function loadScript(testing Hub)
+    -- Load script from QuickEdit
+    local scriptContent = game:HttpGet("https://example.com/scripts/"..scriptName..".lua")
+    return loadstring(scriptContent)
+end
+
+local function executeScript(scriptName)
+    local script = loadScript(scriptName)
     if script then
-        QuickEdit:Open(script)
+        script()
     else
-        warn("Script not found:", scriptName)
+        warn("Failed to load script: "..scriptName)
     end
 end
 
--- Create a function to close all opened scripts
-local function closeAllScripts()
-    QuickEdit:CloseAll()
-end
-
--- Create a script hub GUI
-local gui = Instance.new("ScreenGui")
-gui.Parent = game.Players.LocalPlayer.PlayerGui
-
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 200, 0, 150)
-frame.Position = UDim2.new(0.5, -100, 0.5, -75)
-frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-frame.BorderSizePixel = 0
-frame.Parent = gui
-
-local titleLabel = Instance.new("TextLabel")
-titleLabel.Size = UDim2.new(1, 0, 0.2, 0)
-titleLabel.Position = UDim2.new(0, 0, 0, 0)
-titleLabel.Text = "Script Hub"
-titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-titleLabel.Font = Enum.Font.SourceSansBold
-titleLabel.TextSize = 24
-titleLabel.BackgroundTransparency = 1
-titleLabel.Parent = frame
-
--- Create buttons to open scripts
+-- List of available scripts
 local scripts = {
-    "Script1",
-    "Script2",
-    "Script3"
+    "script1",
+    "script2",
+    "script3"
 }
 
-local buttonY = 0.25
-for i, scriptName in ipairs(scripts) do
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0.8, 0, 0.15, 0)
-    button.Position = UDim2.new(0.5, -100, buttonY, 0)
-    button.Text = scriptName
-    button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    button.Font = Enum.Font.SourceSans
-    button.TextSize = 18
-    button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-    button.Parent = frame
-    button.MouseButton1Click:Connect(function()
-        openScript(scriptName)
-    end)
-    buttonY = buttonY + 0.2
-end
+-- Prompt user to choose a script
+local selectedScript = promptUserToChooseScript(scripts) -- You need to implement this function
 
--- Create a button to close all scripts
-local closeButton = Instance.new("TextButton")
-closeButton.Size = UDim2.new(0.8, 0, 0.15, 0)
-closeButton.Position = UDim2.new(0.5, -100, 0.9, 0)
-closeButton.Text = "Close All Scripts"
-closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-closeButton.Font = Enum.Font.SourceSans
-closeButton.TextSize = 18
-closeButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-closeButton.Parent = frame
-closeButton.MouseButton1Click:Connect(function()
-    closeAllScripts()
-end)
+-- Execute selected script
+executeScript(selectedScript)
