@@ -5,7 +5,7 @@
 
 local function loadScript(testing Hub)
     -- Load script from QuickEdit
-    local scriptContent = game:HttpGet("https://example.com/scripts/"..scriptName..".lua")
+    local scriptContent = game:HttpGet("https://raw.githubusercontent.com/ExculsiveHax/Test-hub-/main/Testing%20script"..scriptName..".lua")
     return loadstring(scriptContent)
 end
 
